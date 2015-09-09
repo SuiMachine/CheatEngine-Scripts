@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"16:9"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//scalesFOV, cause aspect ratio scaling is vert-
+alloc(fovscaling,2048)
+label(returnfromfov)
+label(exitfovscaling)
+
+fovscaling:
+push eax
+movd xmm0,eax
+mov eax,3FAAAAAB
+movd xmm1,eax
+pop eax
+mulss xmm0,xmm1
+movd [ecx+0C],xmm0
+mov [ecx+10],edx
+
+exitfovscaling:
+jmp returnfromfov
+
+"Aqua.exe"+149CB1:
+jmp fovscaling
+nop
+returnfromfov:
+
+//Fixes aspect ratio
+alloc(aspectratio,2048)
+label(returnfromaspect)
+label(exitaspect)
+
+aspectratio:
+repe movsd
+push edi
+sub edi,C
+push edi
+movd xmm0,[edi]
+mov edi,3FAAAAAB
+movd xmm1,edi
+mulss xmm0,xmm1
+pop edi
+movd [edi],xmm0
+pop edi
+mov ecx,[Aqua.exe+26D100]
+
+exitaspect:
+jmp returnfromaspect
+
+"Aqua.exe"+44874:
+jmp aspectratio
+nop
+nop
+nop
+returnfromaspect:
+
+[DISABLE]
+dealloc(fovscaling)
+"Aqua.exe"+149CB1:
+mov [ecx+0C],eax
+mov [ecx+10],edx
+
+dealloc(aspectratio)
+"Aqua.exe"+44874:
+repe movsd
+mov ecx,[Aqua.exe+26D100]
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
