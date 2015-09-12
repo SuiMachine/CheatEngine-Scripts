@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Increase FOV"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(increaseFOV,2048)
+label(VALUE_Multiplier)
+registersymbol(VALUE_Multiplier)
+
+label(codeIncreaseX)
+label(returnhereX)
+label(originalcodeFOVX)
+
+label(codeIncreaseY)
+label(originalcodeFOVY)
+label(returnhereY)
+
+//allocated memory
+increaseFOV:
+VALUE_Multiplier:
+dd (float)1.3333334    //this is a multiplier which multiplies displayed FOV
+
+codeIncreaseX:         //injected code so that FOV X is multiplied
+fld [VALUE_Multiplier]
+fmulp st(1),st(0)
+
+originalcodeFOVX:      //original code and return
+push esi
+fld dword ptr [eax+00000E14]
+jmp returnhereX
+
+codeIncreaseY:         //injected code to multiply FOV Y
+fld [VALUE_Multiplier]
+fmulp st(1),st(0)
+
+originalcodeFOVY:     //original code
+fld dword ptr [eax+00000E14]
+jmp returnhereY
+
+//replaced code for FOV X
+"AN2.dat"+58A56:
+jmp codeIncreaseX
+nop
+nop
+returnhereX:
+
+//replace code for FOV Y
+"AN2.dat"+58A82:
+jmp codeIncreaseY
+nop
+returnhereY:
+
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(increaseFOV)
+
+"AN2.dat"+58A56:
+push esi
+fld dword ptr [eax+00000E14]
+
+"AN2.dat"+58A82:
+fld dword ptr [eax+00000E14]
+
+unregistersymbol(VALUE_Multiplier)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
