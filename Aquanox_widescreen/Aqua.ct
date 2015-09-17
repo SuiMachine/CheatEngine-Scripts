@@ -3,73 +3,172 @@
   <CheatEntries>
     <CheatEntry>
       <ID>14</ID>
-      <Description>"16:9"</Description>
+      <Description>"Fix_aspect &amp; increase FOV"</Description>
       <LastState Activated="0"/>
       <Color>80000008</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
-//scalesFOV, cause aspect ratio scaling is vert-
-alloc(fovscaling,2048)
-label(returnfromfov)
-label(exitfovscaling)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
 
-fovscaling:
-push eax
+label(VALUE_FOV_Multiplier)
+registersymbol(VALUE_FOV_Multiplier)
+label(multiplyFOV)
+
+label(VALUE_ASPECTRATIO_Multiplier)
+registersymbol(VALUE_ASPECTRATIO_Multiplier)
+label(multiplyAspectRatio)
+
+label(returnFOV)
+label(returnAspect)
+
+newmem:
+VALUE_FOV_Multiplier:
+dd (float)1.33334              //Keep the same as AspectRatio multiplier for Hor+ FOV
+
+VALUE_ASPECTRATIO_Multiplier:  //To get the value calculate: (width/heigh)/1.33333333334
+dd (float)1.33334
+
+multiplyFOV:
 movd xmm0,eax
-mov eax,3FAAAAAB
-movd xmm1,eax
-pop eax
+movd xmm1,[VALUE_FOV_Multiplier]
 mulss xmm0,xmm1
-movd [ecx+0C],xmm0
+movd eax,xmm0
+mov [ecx+0C],eax
 mov [ecx+10],edx
+jmp returnFOV
 
-exitfovscaling:
-jmp returnfromfov
-
-"Aqua.exe"+149CB1:
-jmp fovscaling
-nop
-returnfromfov:
-
-//Fixes aspect ratio
-alloc(aspectratio,2048)
-label(returnfromaspect)
-label(exitaspect)
-
-aspectratio:
+multiplyAspectRatio:
 repe movsd
 push edi
 sub edi,C
-push edi
 movd xmm0,[edi]
-mov edi,3FAAAAAB
-movd xmm1,edi
+movd xmm1,[VALUE_ASPECTRATIO_Multiplier]
 mulss xmm0,xmm1
-pop edi
 movd [edi],xmm0
 pop edi
 mov ecx,[Aqua.exe+26D100]
+jmp returnAspect
 
-exitaspect:
-jmp returnfromaspect
+"Aqua.exe"+149CB1:
+jmp multiplyFOV
+nop
+returnFOV:
 
 "Aqua.exe"+44874:
-jmp aspectratio
+jmp multiplyAspectRatio
 nop
 nop
 nop
-returnfromaspect:
-
+returnAspect:
+ 
 [DISABLE]
-dealloc(fovscaling)
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+unregistersymbol(VALUE_FOV_Multiplier)
+unregistersymbol(VALUE_ASPECTRATIO_Multiplier)
+
 "Aqua.exe"+149CB1:
 mov [ecx+0C],eax
 mov [ecx+10],edx
 
-dealloc(aspectratio)
 "Aqua.exe"+44874:
 repe movsd
 mov ecx,[Aqua.exe+26D100]
+//Alt: db 89 41 0C 89 51 10
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>32</ID>
+      <Description>"Change FOV"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+
+label(VALUE_FOV_Multiplier)
+registersymbol(VALUE_FOV_Multiplier)
+label(multiplyFOV)
+
+label(returnFOV)
+
+newmem:
+VALUE_FOV_Multiplier:
+dd (float)1.33334
+
+multiplyFOV:
+movd xmm0,eax
+movd xmm1,[VALUE_FOV_Multiplier]
+mulss xmm0,xmm1
+movd eax,xmm0
+mov [ecx+0C],eax
+mov [ecx+10],edx
+jmp returnFOV
+
+"Aqua.exe"+149CB1:
+jmp multiplyFOV
+nop
+returnFOV:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+unregistersymbol(VALUE_FOV_Multiplier)
+
+"Aqua.exe"+149CB1:
+mov [ecx+0C],eax
+mov [ecx+10],edx
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>31</ID>
+      <Description>"Change Aspect"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(VALUE_ASPECTRATIO_Multiplier)
+registersymbol(VALUE_ASPECTRATIO_Multiplier)
+label(multiplyAspectRatio)
+
+alloc(newmem,2048)
+label(returnhere)
+
+newmem:
+VALUE_ASPECTRATIO_Multiplier:  //To get the number do: (width/heigh)/1.33333333334
+dd (float)1.33334
+
+multiplyAspectRatio:
+repe movsd
+push edi
+sub edi,C
+movd xmm0,[edi]
+movd xmm1,[VALUE_ASPECTRATIO_Multiplier]
+mulss xmm0,xmm1
+movd [edi],xmm0
+pop edi
+mov ecx,[Aqua.exe+26D100]
+jmp returnhere
+
+"Aqua.exe"+44874:
+jmp multiplyAspectRatio
+nop
+nop
+nop
+returnhere:
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+unregistersymbol(VALUE_ASPECTRATIO_Multiplier)
+"Aqua.exe"+44874:
+repe movsd 
+mov ecx,[Aqua.exe+26D100]
+//Alt: db F3 A5 8B 0D 00 D1 66 00
 </AssemblerScript>
     </CheatEntry>
   </CheatEntries>
