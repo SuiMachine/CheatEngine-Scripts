@@ -3,13 +3,13 @@
   <CheatEntries>
     <CheatEntry>
       <ID>14</ID>
-      <Description>"Fix_aspect &amp; increase FOV"</Description>
+      <Description>"EVERYTHING"</Description>
       <LastState Activated="0"/>
       <Color>80000008</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
-alloc(newmem,2048)
+alloc(newmem,4096)
 
 label(VALUE_FOV_Multiplier)
 registersymbol(VALUE_FOV_Multiplier)
@@ -19,8 +19,13 @@ label(VALUE_ASPECTRATIO_Multiplier)
 registersymbol(VALUE_ASPECTRATIO_Multiplier)
 label(multiplyAspectRatio)
 
+label(divideMenuFont)
+label(divideInGameFont)
+
 label(returnFOV)
 label(returnAspect)
+label(returnMenuFont)
+label(returnGameFont)
 
 newmem:
 VALUE_FOV_Multiplier:
@@ -50,6 +55,18 @@ pop edi
 mov ecx,[Aqua.exe+26D100]
 jmp returnAspect
 
+divideMenuFont:
+fld dword ptr [esi+14]
+fdiv [VALUE_ASPECTRATIO_Multiplier]
+fmul dword ptr [eax]
+jmp returnMenuFont
+
+divideInGameFont:
+fmul dword ptr [esi+14]
+fdiv [VALUE_ASPECTRATIO_Multiplier]
+fld dword ptr [esi+18]
+jmp returnGameFont
+
 "Aqua.exe"+149CB1:
 jmp multiplyFOV
 nop
@@ -61,6 +78,15 @@ nop
 nop
 nop
 returnAspect:
+
+"Aqua.exe"+125950:
+jmp divideMenuFont
+returnMenuFont:
+
+"Aqua.exe"+1257B4:
+jmp divideInGameFont
+nop
+returnGameFont:
  
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
@@ -75,13 +101,21 @@ mov [ecx+10],edx
 "Aqua.exe"+44874:
 repe movsd
 mov ecx,[Aqua.exe+26D100]
+
+"Aqua.exe"+125950:
+fld dword ptr [esi+14]
+fmul dword ptr [eax]
+
+"Aqua.exe"+1257B4:
+fmul dword ptr [esi+14]
+fld dword ptr [esi+18]
 //Alt: db 89 41 0C 89 51 10
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
       <ID>32</ID>
       <Description>"Change FOV"</Description>
-      <LastState Activated="0"/>
+      <LastState Activated="1"/>
       <Color>80000008</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
@@ -125,7 +159,7 @@ mov [ecx+10],edx
     <CheatEntry>
       <ID>31</ID>
       <Description>"Change Aspect"</Description>
-      <LastState Activated="0"/>
+      <LastState Activated="1"/>
       <Color>80000008</Color>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
@@ -171,6 +205,107 @@ mov ecx,[Aqua.exe+26D100]
 //Alt: db F3 A5 8B 0D 00 D1 66 00
 </AssemblerScript>
     </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"MenuFix"</Description>
+      <LastState Activated="0"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(multiplier)
+registersymbol(multiplier)
+label(code)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+multiplier:
+dd (float)1.33333
+
+code:
+fld dword ptr [esi+14]
+fld [multiplier]
+fdivp st(1),st(0)
+fmul dword ptr [eax]
+
+exit:
+jmp returnhere
+
+"Aqua.exe"+125950:
+jmp code
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+unregistersymbol(multiplier)
+"Aqua.exe"+125950:
+fld dword ptr [esi+14]
+fmul dword ptr [eax]
+//Alt: db D9 46 14 D8 08
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>46</ID>
+      <Description>"FixInGameFonts"</Description>
+      <LastState Activated="1"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(multiplier)
+registersymbol(multiplier)
+label(code)
+label(returnhere)
+label(exit)
+
+newmem:
+multiplier:
+dd (float)1.333333
+
+code: //this is allocated memory, you have read,write,execute access
+fmul dword ptr [esi+14]
+fdiv [multiplier]
+fld dword ptr [esi+18]
+
+exit:
+jmp returnhere
+
+"Aqua.exe"+1257B4:
+jmp code
+nop
+returnhere:
+
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregistersymbol(multiplier)
+dealloc(newmem)
+"Aqua.exe"+1257B4:
+fmul dword ptr [esi+14]
+fld dword ptr [esi+18]
+//Alt: db D8 4E 14 D9 46 18
+</AssemblerScript>
+    </CheatEntry>
   </CheatEntries>
-  <UserdefinedSymbols/>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>VALUE_FOV_Multiplier</Name>
+      <Address>09690000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>VALUE_ASPECTRATIO_Multiplier</Name>
+      <Address>0BC40000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>multiplier</Name>
+      <Address>0BC60000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
 </CheatTable>
