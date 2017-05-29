@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="24">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Resolution Width"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Bond2012PC.exe+F1788C</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Resolution Height"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Bond2012PC.exe+F17890</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
