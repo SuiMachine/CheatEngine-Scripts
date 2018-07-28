@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"No description"</Description>
+      <VariableType>String</VariableType>
+      <Length>30</Length>
+      <Unicode>0</Unicode>
+      <CodePage>0</CodePage>
+      <ZeroTerminate>1</ZeroTerminate>
+      <Address>dxhr.exe + 1857924</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"InjPositionCopyCode"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(code)
+registersymbol(newmem)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+dd 0
+
+code:
+mov [newmem],eax
+movaps [eax],xmm0
+fmul dword ptr [esi+50]
+jmp returnhere
+
+"dxhr.exe"+2865FB:
+jmp code
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregistersymbol(newmem)
+dealloc(newmem)
+"dxhr.exe"+2865FB:
+movaps [eax],xmm0
+fmul dword ptr [esi+50]
+//Alt: db 0F 29 00 D8 4E 50
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"PosX"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"PosY"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>4</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"PosZ"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"idk"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"WriteDetroit2StartCoord"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(code)
+registersymbol(newmem)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+dd (float)-357239.9688
+dd (float)8051.935547
+dd (float)-25309.38477
+dd (float)1.0
+
+
+code:
+movaps xmm0,[newmem]
+movaps [eax],xmm0
+fmul dword ptr [esi+50]
+jmp returnhere
+
+"dxhr.exe"+2865FB:
+jmp code
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregistersymbol(newmem)
+dealloc(newmem)
+"dxhr.exe"+2865FB:
+movaps [eax],xmm0
+fmul dword ptr [esi+50]
+//Alt: db 0F 29 00 D8 4E 50
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"PosX"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"PosY"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>4</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"PosZ"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"idk"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>31</ID>
+      <Description>"WriteHengsha2StartCoord"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(code)
+registersymbol(newmem)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+dd (float)-51084.32422
+dd (float)-12365.95312
+dd (float)-6555
+dd (float)0
+
+
+code:
+movaps xmm0,[newmem]
+movaps [eax],xmm0
+fmul dword ptr [esi+50]
+jmp returnhere
+
+"dxhr.exe"+2865FB:
+jmp code
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregistersymbol(newmem)
+dealloc(newmem)
+"dxhr.exe"+2865FB:
+movaps [eax],xmm0
+fmul dword ptr [esi+50]
+//Alt: db 0F 29 00 D8 4E 50
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>32</ID>
+          <Description>"PosX"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>33</ID>
+          <Description>"PosY"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>4</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"PosZ"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>35</ID>
+          <Description>"idk"</Description>
+          <VariableType>Float</VariableType>
+          <Address>newmem</Address>
+          <Offsets>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
