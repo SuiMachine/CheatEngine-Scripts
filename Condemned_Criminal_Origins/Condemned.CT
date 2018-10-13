@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"DetourWritePos"</Description>
+      <Options moHideChildren="1" moAllowManualCollapseAndExpand="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(posWriteDetour,2048)
+registersymbol(posWriteDetour)
+label(returnhere)
+label(code)
+label(exit)
+
+posWriteDetour: //this is allocated memory, you have read,write,execute access
+//place your code here
+dd (float)0
+dd (float)0
+dd (float)0
+
+code:
+mov [posWriteDetour],ecx
+mov edx,[eax+8]
+mov [posWriteDetour+4],edx
+mov [esi+24],ecx
+mov edx,[eax+04]
+mov [posWriteDetour+8],edx
+
+exit:
+jmp returnhere
+
+"Condemned.exe"+279FC:
+jmp code
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(posWriteDetour)
+unregistersymbol(posWriteDetour)
+"Condemned.exe"+279FC:
+mov [esi+24],ecx
+mov edx,[eax+04]
+//Alt: db 89 4E 24 8B 50 04
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"No description"</Description>
+          <VariableType>Float</VariableType>
+          <Address>posWriteDetour</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"No description"</Description>
+          <VariableType>Float</VariableType>
+          <Address>posWriteDetour+4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"No description"</Description>
+          <VariableType>Float</VariableType>
+          <Address>posWriteDetour+8</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"WriteInFullStamina"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(writeStaminaDetour,2048)
+label(returnhere)
+label(code)
+
+writeStaminaDetour: //this is allocated memory, you have read,write,execute access
+dd (float)1.0
+
+code:
+fstp st(0)
+fld [writeStaminaDetour]
+fst dword ptr [esi+00000498]
+jmp returnhere
+
+"GameClient.dll"+344B3:
+jmp code
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(writeStaminaDetour)
+"GameClient.dll"+344B3:
+fst dword ptr [esi+00000498]
+//Alt: db D9 96 98 04 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>36</ID>
+      <Description>"WriteZPos"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(writeZPosDetour,2048)
+registersymbol(writeZPosDetour)
+label(writeZPosDetourCode)
+label(returnhere)
+
+writeZPosDetour: //this is allocated memory, you have read,write,execute access
+//place your code here
+dd (float)0
+
+writeZPosDetourCode:
+mov edx,[writeZPosDetour]
+mov [esi+28],edx
+mov ecx,[eax+08]
+jmp returnhere
+
+"Condemned.exe"+27A02:
+jmp writeZPosDetourCode
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(writeZPosDetour)
+unregistersymbol(writeZPosDetour)
+"Condemned.exe"+27A02:
+mov [esi+28],edx
+mov ecx,[eax+08]
+//Alt: db 89 56 28 8B 48 08
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"Z-pos"</Description>
+          <VariableType>Float</VariableType>
+          <Address>writeZPosDetour</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>47</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>565BDC</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>48</ID>
+      <Description>"InFocus"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>566EF0</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>49</ID>
+      <Description>"MenuType"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>GameClient.dll+169F40</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>59</ID>
+      <Description>"LastCycleLengh"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>Condemned.exe+16BC60</Address>
+      <Offsets>
+        <Offset>28</Offset>
+        <Offset>330</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
