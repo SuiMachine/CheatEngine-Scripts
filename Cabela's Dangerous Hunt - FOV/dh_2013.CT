@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Multiply FOV"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(fovMultiply,2048)
+label(returnFovMultiplyCode)
+label(fovMultiplyCode)
+registersymbol(fovMultiply)
+
+fovMultiply: //Modify the value below to adjust FOV
+dd (float)1.3
+
+fovMultiplyCode:
+movss xmm0,[ebp+0C]
+mulss xmm0,[fovMultiply]
+jmp returnFovMultiplyCode
+
+CloakNTEngine.Renderer::SetFOV+6:
+jmp fovMultiplyCode
+returnFovMultiplyCode:
+
+
+ 
+ 
+[DISABLE]
+dealloc(fovMultiply)
+unregistersymbol(fovMultiply)
+CloakNTEngine.Renderer::SetFOV+6:
+movss xmm0,[ebp+0C]
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"FOV Multiplier"</Description>
+          <LastState Value="1.299999952" RealAddress="09210000"/>
+          <VariableType>Float</VariableType>
+          <Address>fovMultiply</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
